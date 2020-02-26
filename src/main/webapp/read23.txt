@@ -1,0 +1,17 @@
+# read23.txt
+
+과제 :  
+JSP 수업폴더에 free 폴더에 vo, dao 인터페이스가 존재합니다.
+
+WebContents 에 
+free 폴더를 생성하시고 
+ freeList.jsp 만들어 주시면 됩니다.
+ (member 의 memberList.jsp를 활용하시면 됩니다.)
+ 
+ -- 테이블의 형식은 아래와 같습니다. 
+ 글번호   분류   제목          작성자    등록일       조회수    
+    1     웹     질문....      이쁜이    2020.02.03     63
+
+/WEB-INF/inc/top_menu.jsp 에서 
+<li><a href="#">공지사항</a></li> 을 "자유게시판"으로 수정하시고
+경로를 설정하시면 됩니다.  	

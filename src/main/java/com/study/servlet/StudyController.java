@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-
-@WebServlet(name = "frontController" 
-			,urlPatterns = { "*.wow" }
-			,description = "사용자의 요청을 처리하는 메인 컨트롤러"
-			
-			,initParams = {@WebInitParam(name = "configFile" 
-										,value = "/WEB-INF/classes/config/study_uri.properties") }
-			,loadOnStartup = 2)
+//
+//@WebServlet(name = "frontController" 
+//			,urlPatterns = { "*.wow" }
+//			,description = "사용자의 요청을 처리하는 메인 컨트롤러"
+//			
+//			,initParams = {@WebInitParam(name = "configFile" 
+//										,value = "/WEB-INF/classes/config/study_uri.properties") }
+//			,loadOnStartup = 2)
 public class StudyController extends HttpServlet {
 
 	private static final long serialVersionUID = 3184356295960934899L;

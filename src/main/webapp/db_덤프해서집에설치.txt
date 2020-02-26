@@ -1,0 +1,29 @@
+학원/회사에서 사용중인 DB (source) 
+
+집에 설치된 곳에 가져가서 하려고합니다. (target)
+java : ts : myts,   conn, resou, create view
+---------------------------------------------
+지금 하려고 하는것은 덤프 
+
+조건 : 양쪽에 동일한 계정이 존재, 
+   동일한 이름의 테이블스페이스가 필요할 수 있습니다.(LOB 타입 있으면 필요)
+
+회사 : 덤프   
+   exp java/oracle file=java.dmp  
+  
+집 : 
+1. drop user java cascade;  -- 소유자의 객체들을 제거합니다.
+1.2 CREATE TABLESPACE myts
+    DATAFILE '/u01/app/oracle/oradata/XE/myts2s.dbf' SIZE 300M
+    AUTOEXTEND ON NEXT 20M MAXSIZE 500M; 
+2. create user java identified by oracle default tablespace users;
+3. grant connect, resource, create view, create synonym to java; -- source 계정의 권한이상으로
+
+4. imp java/oracle file=java.dmp
+
+
+-- DROP TABLESPACE myts  INCLUDING CONTENTS;
+
+
+
+

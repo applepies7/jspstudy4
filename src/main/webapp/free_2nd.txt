@@ -1,0 +1,88 @@
+# free_2st.txt
+
+ 31일차 
+------------------------------------------------
+ p.431 : Dao에서 Connection에 접근하는 방식    
+  부터 
+ p.443 까지 중요
+ 
+ 18장(p.516)은 미리 읽어 두시는게 좋습니다. 
+      특히 지각자들은 어렵습니다.    
+
+--------------
+문제 1 : 김용욱
+문제 2 : 이주희
+문제 3 : 남정우 
+
+최소 문제 2가지 이상을 교재, 구글링해서 해보세요          
+
+ 32일차 
+----------        
+         
+새글등록 FreeFormController 
+등록처리 FreeRegistController 
+
+과제 : 수정 및 저장 
+FreeEditController
+FreeModifyController
+
+ 33일차 
+---------- 
+현재 프론트 컨트롤러 SimpleController 에서
+문제점 : 자꾸 기능이 추가될수록 소스를 수정하게 됨 
+
+과제 : 
+ 1. 리다이렉트 요청시 : 절대경로, 상대경로인지 구분하여  ContextPath 추가여부 결정
+     
+ 2. 회원목록, 회원정보 에 대한 컨트롤러를 구성하여 주세요 
+    (memberList.wow, memberView.wow 에...  
+     해당 뷰(jsp)에 임포트, dao 가 존재하면 안되요...)
+
+
+ 35일차 
+---------- 
+ 예외 : BizException  -> RuntimeException  
+        + BizDuplicateException : 중복키 에러 
+        + BizNotFoundException  : 조회 에러    
+        + BizAuthenticationException : 인증 에러
+        + BizNotEffectedException  : 
+
+ DAO  :   
+   Create   : insertXxx    
+   Retrieve : getXxx , getXxxList  ( selectXxx, selectXxxList)
+   Update   : updateXxx
+   Delete   : deleteXxx  
+        
+ Service   
+   등록 : registXxx, (createXxx, addXxx,  insertXxx) 
+   수정 : modifyXxx   
+   조회 : getXxx , getXxxList
+   삭제 : removeXxx 
+ 
+ Controller 
+ 
+예전 DAO 복사 메서드명, 예외 만 수정  
+IFreeBoardService 
+ + FreeBoardServiceImpl
+ 
+-----------------------------------------------
+중간 개인 프로젝트 
+
+회원가입 주소 API 사용 (daum 또는 외부 api)
+자유게시판에 에디터(워지웍) : daum, naver, summer note, ckeditor ...
+
+일반게시판 + 회원만 등록,수정,삭제가능 하도록 해주세요 
+ (등록버튼, 수정버튼은 제어해 주세요) 
+
+-------------------------
+본인의 주제로 정하셔도 
+
+또는   QnA   
+       1:1 문의 게시판
+       계층형 게시판    
+--------------------------
+   
+  
+ 
+ https://all-record.tistory.com/131
+ 

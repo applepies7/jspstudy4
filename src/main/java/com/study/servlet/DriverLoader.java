@@ -17,6 +17,12 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 public class DriverLoader extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5111592740296253046L;
+
+
 	@Override
 	public void init() throws ServletException {		
 		loadJDBCDriver();

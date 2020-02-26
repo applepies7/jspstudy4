@@ -78,8 +78,19 @@ public class FreeBoardServiceImpl implements IFreeBoardService {
 
 	@Override
 	public void removeBoard(FreeBoardVO board) throws BizException {
-
+		try {
+			int res = freeDao.deleteBoard(board);
+			if (res < 1) {
+				throw new BizRegistFailException();
+			}
+		} catch (SQLException e) {
+			if (e.getErrorCode() == 1) {
+				throw new BizDuplicateException(e);
+			}
+			throw new BizException(e);
+		}
 	}
+	
 
 	@Override
 	public void increaseHit(int boNum) throws BizException {

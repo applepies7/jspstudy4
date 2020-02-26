@@ -1,0 +1,38 @@
+#read21.txt
+
+부트스트랩 적용된 이클립스 템플릿 수정
++ top메뉴가 적용된 파일도 템플릿 추가
+
+
+
+분류				파일명					파라미터
+회원조회			memberList.jsp			n/a
+회원등록			memberForm.jsp			n/a
+회원등록 처리		memberRegist.jsp		폼데이터 10-12
+상세보기			memberView.jsp 			memId
+정보수정(화면		memberEdit.jsp			memId form.jsp / view.jsp 섞은 화면
+정보수정 처리		memberModify.jsp		폼데이터 10-12
+회원탈퇴			memberDelete.jsp 		memId,memPass / 실제 폼 데이터
+
+
+getMember 메서드의 생일 쿼리 수정 
+, TO_CHAR(mem_bir,'YYYY-MM-DD') AS mem_bir   
+
+-- 삼항연산자 또는 if 문 2개로  
+<option value="HB01"  selected="selected">수영</option> 
+
+-- 과제 : 
+ memberEdit.jsp 에 회원탈퇴 버튼을 클릭하면 
+ - form 의 액션방향을 memberDelete.jsp 로 변경해서 , 서브밋 
+  
+
+
+
+한개의 Form에서 여러개 Submit 사용하기
+HTML : 폼(form) 이해 - Nextree
+HTML 폼 전송할 때 알아야 할 팁
+폼(form) 제어를 위한 3가지 유용한 팁
+스크립트로 서브밋 제어 
+유효성 검증(validation) 올바르면 서브밋 하거나
+서브밋의 방향을 바꾸거나 해야 할때
+이중 서브밋이 되는지 체크 할것.
