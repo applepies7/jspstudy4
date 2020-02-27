@@ -1,6 +1,13 @@
 package com.study.free.vo;
 
-public class FreeBoardVO {
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class FreeBoardVO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private int boNum;                /* 글번호 */
 	private String boTitle;           /* 글제목 */
 	private String boCategory;        /* 글분류 */
@@ -133,10 +140,7 @@ public class FreeBoardVO {
 
 	@Override
 	public String toString() {
-		return "FreeBoardVO [boNum=" + boNum + ", boTitle=" + boTitle + ", boCategory=" + boCategory + ", boCatNm="
-				+ boCatNm + ", boWriter=" + boWriter + ", boPass=" + boPass + ", boContent=" + boContent + ", boIp="
-				+ boIp + ", boHit=" + boHit + ", boRegDate=" + boRegDate + ", boModDate=" + boModDate + ", boDelYn="
-				+ boDelYn + "]";
+		return ToStringBuilder.reflectionToString(this);
 	}
 	
 	

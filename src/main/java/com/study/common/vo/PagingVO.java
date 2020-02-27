@@ -1,11 +1,19 @@
 package com.study.common.vo;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * @author pc15
  *
  */
-public class PagingVO {
+public class PagingVO implements Serializable  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int currentPageNo; // 현재 페이지 번호
 	private int recordCountPerPage; // 한 페이지당 게시되는 게시물 건
 	private int pageSize; // 페이지 리스트에 게시되는 페이지 건수
@@ -128,10 +136,7 @@ public class PagingVO {
 
 	@Override
 	public String toString() {
-		return "PagingVO [currentPageNo=" + currentPageNo + ", recordCountPerPage=" + recordCountPerPage + ", pageSize="
-				+ pageSize + ", totalRecordCount=" + totalRecordCount + ", totalPageCount=" + totalPageCount
-				+ ", firstPageNoOnPageList=" + firstPageNoOnPageList + ", lastPageNoOnPageList=" + lastPageNoOnPageList
-				+ ", firstRecordIndex=" + firstRecordIndex + ", lastRecordIndex=" + lastRecordIndex + "]";
+		return ToStringBuilder.reflectionToString(this);
 	}
 	
 	

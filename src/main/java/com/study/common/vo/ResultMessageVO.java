@@ -1,7 +1,15 @@
 package com.study.common.vo;
 
-public class ResultMessageVO {
+import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class ResultMessageVO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean result;
 	private String title;
 	private String message;
@@ -49,6 +57,9 @@ public class ResultMessageVO {
 		return this;
 	}
 
-	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 		
 }

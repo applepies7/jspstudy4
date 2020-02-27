@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,40 +31,51 @@ import com.study.free.vo.FreeBoardVO;
 import com.study.free.vo.FreeSearchVO;
 import com.study.util.CookieBox;
 
-
-
 @Controller
+@RequestMapping("/free")
 public class FreeBoardController {
+	
+	
+	private final Logger logger =LoggerFactory.getLogger(getClass());
 
+
+	
 	private IFreeBoardService freeBoardService = new FreeBoardServiceImpl();
 	private ICommonCodeDao codeDao = new CommonCodeDaoOracle();
-	
 
-	@RequestMapping("/free/freeList.wow")
-	//public String freeList(httpreHttpServletRequest req, FreeSearchVO searchVO) throws Exception {
+	@RequestMapping("/freeList.wow")
+	// public String freeList(httpreHttpServletRequest req, FreeSearchVO searchVO)
+	// throws Exception {
 	public void freeList(ModelMap model, FreeSearchVO searchVO) throws Exception {
+		logger.debug("debug searchVO:{}",searchVO);
+		logger.trace("trace~~");
+		logger.info("info~~");
+		logger.warn("warn~~");
+		logger.error("error~~");
 
 		List<CodeVO> catList = codeDao.getCodeListByParent("BC00");
 		List<FreeBoardVO> boardList = freeBoardService.getBoardList(searchVO);
+		logger.info("list size = {}", boardList.size());
 
 		model.addAttribute("search", searchVO);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("catList", catList);
 
-		//return "free/freeList";
+		// return "free/freeList";
 
 	}
-	
-	@RequestMapping(value = "/free/freeView.wow" , method = RequestMethod.GET, params ="boNum" )
-	public String freeView(HttpServletRequest req, HttpServletResponse resp, @RequestParam("boNum") int num) throws Exception {
-		
+
+	@RequestMapping(value = "/freeView.wow", method = RequestMethod.GET, params = "boNum")
+	public String freeView(HttpServletRequest req, HttpServletResponse resp, @RequestParam("boNum") int num)
+			throws Exception {
+
 		try {
 			FreeBoardVO view = freeBoardService.getBoard(num);
 			System.out.println(view);
 			CookieBox box = new CookieBox(req);
 			String readBoard = box.getValue("free");
-			if (readBoard == null) 
-				readBoard = "";	
+			if (readBoard == null)
+				readBoard = "";
 			String pattern = "\\b" + num + "\\b";
 			if (!Pattern.compile(pattern).matcher(readBoard).find()) {
 				freeBoardService.increaseHit(view.getBoNum());
@@ -73,61 +85,54 @@ public class FreeBoardController {
 			req.setAttribute("view", view);
 			return "free/freeView.jsp?bonum=" + num;
 		} catch (BizNotFoundException e) {
+			logger.error("조회 오류 boNum={}", num, e);
 			ResultMessageVO message = new ResultMessageVO();
-			message.setResult(false)
-			       .setTitle("조회실패")
-			       .setMessage("그런 글 없는데????")
-			       .setUrl("/free/freeList.wow")
-			       .setUrlTitle("목록으로");
+			message.setResult(false).setTitle("조회실패").setMessage("그런 글 없는데????").setUrl("/free/freeList.wow")
+					.setUrlTitle("목록으로");
 			req.setAttribute("resultMessage", message);
 			return "common/message";
 
-			
 		}
 	}
-	@RequestMapping(value = "/free/freeEdit.wow")
-	public String freeEdit(int boNum, ModelMap model) throws Exception{
+
+	@RequestMapping(value = "/freeEdit.wow")
+	public String freeEdit(int boNum, ModelMap model) throws Exception {
 		FreeBoardVO view = freeBoardService.getBoard(boNum);
 		List<CodeVO> a = codeDao.getCodeListByParent("BC00");
 		model.addAttribute("catList", a);
 		model.addAttribute("view", view);
 
-		
 		return "free/freeEdit";
-		
-	}
-	
-	@RequestMapping(value = "/free/freeModify.wow", method = RequestMethod.POST)
-	public String freeModyfy(FreeBoardVO free , HttpServletRequest req, ModelMap model) throws Exception {
-		try {
-		freeBoardService.modifyBoard(free);
-	
-		return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
-	
-		} catch (BizDuplicateException e) {
-		ResultMessageVO message = new ResultMessageVO();
-		message.setResult(false)
-				.setTitle("수정 실패")
-				.setMessage("등록 실패 했음.... 중복된 글입니다. ").setUrl("/free/freeList.wow")
-				.setUrlTitle("목록으로");
-		model.addAttribute("resultMessage", message);
-		return "common/message";
-	} catch (BizRegistFailException e) {
-		ResultMessageVO message = new ResultMessageVO();
-		message.setResult(false)
-				.setTitle("등록 실패")
-				.setMessage("글 등록 을 실패 했음....")
-				.setUrl("/free/freeList.wow")
-				.setUrlTitle("목록으로");
-		model.addAttribute("resultMessage", message);
-		return "common/message.jsp";
-	} 
-	}
-	@RequestMapping(value = "/free/freeRegist.wow", method = RequestMethod.POST)
-	public String registFree(HttpServletRequest req, HttpServletResponse resp ,FreeBoardVO free, HttpSession session , ModelMap model) throws Exception {
-		//@RequestParam("dupKey") String pDupKey 
 
-		
+	}
+
+	@RequestMapping(value = "/freeModify.wow", method = RequestMethod.POST)
+	public String freeModyfy(FreeBoardVO free, HttpServletRequest req, ModelMap model) throws Exception {
+		try {
+			freeBoardService.modifyBoard(free);
+
+			return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
+
+		} catch (BizDuplicateException e) {
+			ResultMessageVO message = new ResultMessageVO();
+			message.setResult(false).setTitle("수정 실패").setMessage("등록 실패 했음.... 중복된 글입니다. ")
+					.setUrl("/free/freeList.wow").setUrlTitle("목록으로");
+			model.addAttribute("resultMessage", message);
+			return "common/message";
+		} catch (BizRegistFailException e) {
+			ResultMessageVO message = new ResultMessageVO();
+			message.setResult(false).setTitle("등록 실패").setMessage("글 등록 을 실패 했음....").setUrl("/free/freeList.wow")
+					.setUrlTitle("목록으로");
+			model.addAttribute("resultMessage", message);
+			return "common/message.jsp";
+		}
+	}
+
+	@RequestMapping(value = "/freeRegist.wow", method = RequestMethod.POST)
+	public String registFree(HttpServletRequest req, HttpServletResponse resp, FreeBoardVO free, HttpSession session,
+			ModelMap model) throws Exception {
+		// @RequestParam("dupKey") String pDupKey
+
 		String pDupKey = req.getParameter("dupKey");
 		String sDupKey = (String) session.getAttribute("DUP_SUBMIT_PREVENT");
 
@@ -150,64 +155,53 @@ public class FreeBoardController {
 			return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
 		} catch (BizDuplicateException e) {
 			ResultMessageVO message = new ResultMessageVO();
-			message.setResult(false)
-					.setTitle("등록 실패")
-					.setMessage("등록 실패 했음.... 중복된 글입니다. ")
-					.setUrl("/free/freeList.wow")
-					.setUrlTitle("목록으로");
+			message.setResult(false).setTitle("등록 실패").setMessage("등록 실패 했음.... 중복된 글입니다. ")
+					.setUrl("/free/freeList.wow").setUrlTitle("목록으로");
 			model.addAttribute("resultMessage", message);
 			return "common/message";
 		} catch (BizRegistFailException e) {
 			ResultMessageVO message = new ResultMessageVO();
-			message.setResult(false)
-					.setTitle("등록 실패")
-					.setMessage("글 등록 을 실패 했음....")
-					.setUrl("/free/freeList.wow")
+			message.setResult(false).setTitle("등록 실패").setMessage("글 등록 을 실패 했음....").setUrl("/free/freeList.wow")
 					.setUrlTitle("목록으로");
 			model.addAttribute("resultMessage", message);
 			return "common/message";
 		}
 
 	}
-	@RequestMapping(value = "/free/freeForm.wow")
-	public String freeForm (HttpServletRequest req, HttpServletResponse resp, HttpSession session, ModelMap model) throws Exception {
-		
+
+	@RequestMapping(value = "/freeForm.wow")
+	public String freeForm(HttpServletRequest req, HttpServletResponse resp, HttpSession session, ModelMap model)
+			throws Exception {
+
 		String dupKey = UUID.randomUUID().toString();
-		session.setAttribute("DUP_SUBMIT_PREVENT",dupKey);
+		session.setAttribute("DUP_SUBMIT_PREVENT", dupKey);
 		List<CodeVO> a = codeDao.getCodeListByParent("BC00");
 		model.addAttribute("catList", a);
 		req.setAttribute("dupKey", dupKey);
-	
+
 		return "free/freeForm";
 	}
-	
-	@RequestMapping(value = "/free/freeDelete.wow", method = RequestMethod.POST)
-	public String freeDelete(FreeBoardVO free , HttpServletRequest req, ModelMap model) throws Exception {
+
+	@RequestMapping(value = "/freeDelete.wow", method = RequestMethod.POST)
+	public String freeDelete(FreeBoardVO free, HttpServletRequest req, ModelMap model) throws Exception {
 		try {
-		freeBoardService.removeBoard(free);
-	
-		return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
-	
+			freeBoardService.removeBoard(free);
+
+			return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
+
 		} catch (BizDuplicateException e) {
-		ResultMessageVO message = new ResultMessageVO();
-		message.setResult(false)
-				.setTitle("수정 실패")
-				.setMessage("등록 실패 했음.... 중복된 글입니다. ").setUrl("/free/freeList.wow")
-				.setUrlTitle("목록으로");
-		model.addAttribute("resultMessage", message);
-		return "common/message";
-	} catch (BizRegistFailException e) {
-		ResultMessageVO message = new ResultMessageVO();
-		message.setResult(false)
-				.setTitle("등록 실패")
-				.setMessage("글 등록 을 실패 했음....")
-				.setUrl("/free/freeList.wow")
-				.setUrlTitle("목록으로");
-		model.addAttribute("resultMessage", message);
-		return "common/message.jsp";
-	} 
+			ResultMessageVO message = new ResultMessageVO();
+			message.setResult(false).setTitle("수정 실패").setMessage("등록 실패 했음.... 중복된 글입니다. ")
+					.setUrl("/free/freeList.wow").setUrlTitle("목록으로");
+			model.addAttribute("resultMessage", message);
+			return "common/message";
+		} catch (BizRegistFailException e) {
+			ResultMessageVO message = new ResultMessageVO();
+			message.setResult(false).setTitle("등록 실패").setMessage("글 등록 을 실패 했음....").setUrl("/free/freeList.wow")
+					.setUrlTitle("목록으로");
+			model.addAttribute("resultMessage", message);
+			return "common/message.jsp";
+		}
 	}
-	
-	
+
 }
-	

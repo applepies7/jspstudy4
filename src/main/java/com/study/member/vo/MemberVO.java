@@ -1,6 +1,14 @@
 package com.study.member.vo;
 
-public class MemberVO {
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class MemberVO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String memId; /* 회원 아이디 */
 	private String memPass; /* 회원 비밀번호 */
 	private String memName; /**/
@@ -18,6 +26,7 @@ public class MemberVO {
 	private String memDelete; /**/
 	private String memJobnm; /**/
 	private String memLikenm; /**/
+	
 	
 	
 	
@@ -191,11 +200,7 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "MemberVO [memId=" + memId + ", memPass=" + memPass + ", memName=" + memName + ", memRegno1=" + memRegno1
-				+ ", memRegno2=" + memRegno2 + ", memBir=" + memBir + ", memZip=" + memZip + ", memAdd1=" + memAdd1
-				+ ", memAdd2=" + memAdd2 + ", memHp=" + memHp + ", memMail=" + memMail + ", memJob=" + memJob
-				+ ", memLike=" + memLike + ", memMileage=" + memMileage + ", memDelete=" + memDelete + ", memJobnm="
-				+ memJobnm + ", memLikenm=" + memLikenm + "]";
+		return ToStringBuilder.reflectionToString(this);
 	}
 	
 	

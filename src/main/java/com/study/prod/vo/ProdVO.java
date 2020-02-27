@@ -1,6 +1,14 @@
 	package com.study.prod.vo;
 
-public class ProdVO {
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class ProdVO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String prodId;             
 	private String prodName;           
 	private String prodLgu;            
@@ -69,5 +77,10 @@ public class ProdVO {
 	public void setProdRegDate(String prodRegDate) {
 		this.prodRegDate = prodRegDate;
 	}            
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 	
 }

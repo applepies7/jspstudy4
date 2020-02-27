@@ -1,12 +1,18 @@
 package com.study.free.vo;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.study.common.vo.PagingVO;
 
-public class FreeSearchVO extends PagingVO {
+public class FreeSearchVO extends PagingVO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String searchCategory;
 	private String searchType;
 	private String searchWord;

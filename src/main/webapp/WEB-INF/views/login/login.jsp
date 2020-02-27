@@ -71,7 +71,7 @@
 <%@include file="/WEB-INF/inc/top_menu.jsp" %>
 <div class="container">
 <div class="login-form">
-    <form action="<%=request.getContextPath()%>/login/loginCheck.wow" method="post">
+    <form action="<%=request.getContextPath()%>/login/login.wow" method="post">
         <h2 class="text-center">로그인</h2>   
         <div class="form-group">
         	<div class="input-group">

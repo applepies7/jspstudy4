@@ -1,6 +1,14 @@
 package com.study.common.vo;
 
-public class CodeVO {
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public class CodeVO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String commCd;            
 	private String commNm;            
 	private String commParent;        
@@ -33,8 +41,7 @@ public class CodeVO {
 	
 	@Override
 	public String toString() {
-		return "CodeVO [commCd=" + commCd + ", commNm=" + commNm + ", commParent=" + commParent + ", commOrd=" + commOrd
-				+ "]";
+		return ToStringBuilder.reflectionToString(this);
 	}             
 	
 }
