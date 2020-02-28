@@ -3,18 +3,22 @@ package com.study.free.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.study.common.exception.BizDuplicateException;
 import com.study.common.exception.BizException;
 import com.study.common.exception.BizNotFoundException;
 import com.study.common.exception.BizRegistFailException;
-import com.study.free.dao.FreeBoardDaoOracle;
 import com.study.free.dao.IFreeBoardDao;
 import com.study.free.vo.FreeBoardVO;
 import com.study.free.vo.FreeSearchVO;
 
+@Service
 public class FreeBoardServiceImpl implements IFreeBoardService {
 
-	private IFreeBoardDao freeDao = new FreeBoardDaoOracle();
+	@Autowired
+	private IFreeBoardDao freeDao;
 
 	@Override
 	public List<FreeBoardVO> getBoardList(FreeSearchVO searchVO) throws BizException {

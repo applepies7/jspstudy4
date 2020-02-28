@@ -1,0 +1,31 @@
+#
+39일차 
+
+스프링 레거시 프로젝트생성후 
+pom.xml : java 1.8 , 스프링 버전 4.x  , 서블릿 3.1 이상, JSP 2.3 
+         + commons  + Oracle
+          
+maven -> update project : 프로젝트 속성자동 변경 
+         (버그 : deployment assembly 에서 maven 라이브러리가 빠짐
+                 추가필요  )
+
+run as : maven clean ,  maven -> install , maven clean
+
+project : clean 까지
+
+
+
+
+
+
+mybatis설정시
+Sql session을 직접처리할때는 네임스페이스 id는 마음대로 설정해도 됩니다.
+자동 매퍼(@Mapper @Repository)를 사용할 경우 해당 인터페이스대로,
+매퍼파일 자동완성X 자바에서 참조등을 도와주는 플러그인 mybatipse
+
+
+spring  : mvc-servlet-context.xml 기존 servlet-context.xml
+datasource-context.xml
+aop-context.xml
+root-context.xml
+

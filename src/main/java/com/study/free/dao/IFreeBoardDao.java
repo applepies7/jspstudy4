@@ -3,9 +3,12 @@ package com.study.free.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.study.free.vo.FreeBoardVO;
 import com.study.free.vo.FreeSearchVO;
 
+@Mapper
 public interface IFreeBoardDao {
 
 	public int getBoardCount(FreeSearchVO searchVO) throws SQLException; 
