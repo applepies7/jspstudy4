@@ -1,0 +1,211 @@
+# free_1st.txt
+
+임규진 : freeEdit.jsp, freeModify.jsp , freeDelete.jsp
+이주희 : FreeBoardDaoOracle.java (updateMember, deleteMember)
+
+24일차 : freeView.jsp 
+         - 수정하기 버튼 -> freeEdit.jsp  
+         
+         freeEdit.jsp : freeForm 복사 + 내용은 freeView
+          (글번호 보여주고, hidden 으로 boNum)
+          <button type="submit" formaction="freeModify.jsp" >
+         - 저장하기 : freeModify.jsp  (ip, 수정일 추가)
+         - 삭제하기 : freeDelete.jsp  (formaction="freeDelete.jsp")  
+         
+         freeRegist.jsp 복사하셔서 구현()
+
+- 2시간으로   
+
+> 기본적인 CRUD 구현 이후 생각해봐야 할 문제 
+
+>> 조회수 복수 증가 방지 
+  - 간단하게는 쿠키로    free : "27|28|1" 
+  - 자세히는 (사용자ID 또는 IP) + 읽은글 정보 를 DB 에 저장 
+
+>> 새로고침(F5), 이중 서브밋 에 따른 중복글 등록 방지
+  - 성공했을때 리다이렉트 처리 (가장 깔끔) 
+  - 세션을 사용한 임시 토큰(세션을 사용하지만 토큰은 한개만 유지)  
+  - 클라이언트영역에서 스크립트 제어 
+
+  26일차 
+----------
+ 1. 자유게시판 수정 
+    성공했을때 리다이렉트 처리 (가장 깔끔) 했지만 조금더 보강 
+   -  세션을 사용한 임시 토큰(세션을 사용하지만 토큰은 한개만 유지)
+   
+    등록/수정화면으로 진입할때 세션과 히든을 사용해서 유니크한 키 생성
+    유일한 값 : System.currentTimeMili, UUID
+    히든 : dup_key 
+    세션 : DUP_SUBMIT_PREVENT
+    
+    처리하는 페이지에서 확인 
+    
+ 2. 로그인 처리  
+    - member,
+    - 일반회원, 관리자 : 첫 회의할때 무시... 
+    - 1. 기존 member 테이블에 인증컬럼을 추가 (운영자, 관리자, 일반회원 )
+      2. 회원중에 일부를 관리자테이블에 입력
+      3. member 따로, 관리자 따로 ....   
+    
+    -호석아빠 : 2. 회원중에 일부를 관리자테이블에 입력
+    
+    
+ 3. 과제 : top 메뉴 변경
+------------------------------------------------
+- 차후에 할 내용 
+ p.431 : Dao에서 Connection에 접근하는 방식    
+  부터 
+ p.443 까지 중요
+ 
+ 18장(p.516) 은 미리 읽어 두시는게 좋습니다. 
+      특히 지각자들은 어렵습니다.    
+
+  27일차 
+----------
+페이징 
+  
+  28일차 
+----------
+ - 검색 
+   화면에 검색영역 화면 설정 
+   Dao getBoardCount() 에 쿼리, 변수 설정 
+       getBoardList() 에 쿼리, 변수 설정
+  
+ - commons.lang 의 
+   ToStringBuilder 을 사용하여 자바객체의 toString() 메서드를 구현  
+   StringUtils 사용 (검증 isXxxx isBlank, isNotBlank ) 
+   isBlank = null, "", "    " ->  true
+   
+과제 : (정우아빠)
+  검색을 하고 난 이후의 화면에서 
+  검색구분, 검색어, 분류가 유지 되게끔 수정해 주세요
+       
+  
+  29일차 
+----------
+과제 : 
+ freeList.jsp 에서 했던 페이징 및 검색을 memberList.jsp 에 적용 
+ 
+ - PagingVO 를 상속한 MemberSearchVO 생성
+   + searchType , searchWord , searchJob 
+     id, 회원명, 주소   
+    
+ - 페이징, 검색 
+  dao   + int getMemberCount(MemberSearchVO)  추가  
+        + List getMemberList(MemberSearchVO)  수정 
+        
+  처음에 테스트 할때는  memberList.jsp?curPage=3         
+        
+ 
+   
+         
+         
+         
+         
+         
+         # free_1st.txt
+
+임규진 : freeEdit.jsp, freeModify.jsp , freeDelete.jsp
+이주희 : FreeBoardDaoOracle.java (updateMember, deleteMember)
+
+24일차 : freeView.jsp 
+         - 수정하기 버튼 -> freeEdit.jsp  
+         
+         freeEdit.jsp : freeForm 복사 + 내용은 freeView
+          (글번호 보여주고, hidden 으로 boNum)
+          <button type="submit" formaction="freeModify.jsp" >
+         - 저장하기 : freeModify.jsp  (ip, 수정일 추가)
+         - 삭제하기 : freeDelete.jsp  (formaction="freeDelete.jsp")  
+         
+         freeRegist.jsp 복사하셔서 구현()
+
+- 2시간으로   
+
+> 기본적인 CRUD 구현 이후 생각해봐야 할 문제 
+
+>> 조회수 복수 증가 방지 
+  - 간단하게는 쿠키로    free : "27|28|1" 
+  - 자세히는 (사용자ID 또는 IP) + 읽은글 정보 를 DB 에 저장 
+
+>> 새로고침(F5), 이중 서브밋 에 따른 중복글 등록 방지
+  - 성공했을때 리다이렉트 처리 (가장 깔끔) 
+  - 세션을 사용한 임시 토큰(세션을 사용하지만 토큰은 한개만 유지)  
+  - 클라이언트영역에서 스크립트 제어 
+
+  26일차 
+----------
+ 1. 자유게시판 수정 
+    성공했을때 리다이렉트 처리 (가장 깔끔) 했지만 조금더 보강 
+   -  세션을 사용한 임시 토큰(세션을 사용하지만 토큰은 한개만 유지)
+   
+    등록/수정화면으로 진입할때 세션과 히든을 사용해서 유니크한 키 생성
+    유일한 값 : System.currentTimeMili, UUID
+    히든 : dup_key 
+    세션 : DUP_SUBMIT_PREVENT
+    
+    처리하는 페이지에서 확인 
+    
+ 2. 로그인 처리  
+    - member,
+    - 일반회원, 관리자 : 첫 회의할때 무시... 
+    - 1. 기존 member 테이블에 인증컬럼을 추가 (운영자, 관리자, 일반회원 )
+      2. 회원중에 일부를 관리자테이블에 입력
+      3. member 따로, 관리자 따로 ....   
+    
+    -호석아빠 : 2. 회원중에 일부를 관리자테이블에 입력
+    
+    
+ 3. 과제 : top 메뉴 변경
+------------------------------------------------
+- 차후에 할 내용 
+ p.431 : Dao에서 Connection에 접근하는 방식    
+  부터 
+ p.443 까지 중요
+ 
+ 18장(p.516) 은 미리 읽어 두시는게 좋습니다. 
+      특히 지각자들은 어렵습니다.    
+
+  27일차 
+----------
+페이징 
+  
+  28일차 
+----------
+ - 검색 
+   화면에 검색영역 화면 설정 
+   Dao getBoardCount() 에 쿼리, 변수 설정 
+       getBoardList() 에 쿼리, 변수 설정
+  
+ - commons.lang 의 
+   ToStringBuilder 을 사용하여 자바객체의 toString() 메서드를 구현  
+   StringUtils 사용 (검증 isXxxx isBlank, isNotBlank ) 
+   isBlank = null, "", "    " ->  true
+   
+과제 : (정우아빠)
+  검색을 하고 난 이후의 화면에서 
+  검색구분, 검색어, 분류가 유지 되게끔 수정해 주세요
+       
+  
+  29일차 
+----------
+과제 : 
+ freeList.jsp 에서 했던 페이징 및 검색을 memberList.jsp 에 적용 
+ 
+ - PagingVO 를 상속한 MemberSearchVO 생성
+   + searchType , searchWord , searchJob 
+     id, 회원명, 주소   
+    
+ - 페이징, 검색 
+  dao   + int getMemberCount(MemberSearchVO)  추가  
+        + List getMemberList(MemberSearchVO)  수정 
+        
+  처음에 테스트 할때는  memberList.jsp?curPage=3         
+        
+ 
+   
+         
+         
+         
+         
+         
+         
