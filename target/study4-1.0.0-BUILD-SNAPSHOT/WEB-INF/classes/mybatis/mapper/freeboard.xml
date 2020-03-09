@@ -7,6 +7,31 @@
 <!-- 네임스페이스 = -->
 <mapper namespace="com.study.free.dao.IFreeBoardDao">
 
+	<!-- 반복적 구문 재사용. -->
+	<sql id="whereSearchClause">
+		<if
+			test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord) 
+			and @org.apache.commons.lang3.StringUtils@isNotBlank(searchType)">
+			<choose>
+				<when test='searchType eq "T"'>
+					and bo_title like '%'|| #{searchWord} ||'%'
+				</when>
+				<when test='searchType eq "W"'>
+					and bo_writer like '%'|| #{searchWord} ||'%'
+				</when>
+				<when test='searchType eq "C"'>
+					and bo_content like '%'|| #{searchWord} ||'%'
+				</when>
+
+			</choose>
+		</if>
+		<if
+			test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchCategory)">
+			and bo_category = #{searchCategory}
+		</if>
+
+	</sql>
+
 
 	<select id="getBoardCount"
 		parameterType="com.study.free.vo.FreeSearchVO" resultType="int">
@@ -14,31 +39,14 @@
 		count(*)
 		from free_board
 		where bo_del_yn = 'N'
-		<if
-			test='searchWord != null && searchWord !=" " && searchType != null && searchType !=" "'>
-			<choose>
-				<when test='searchType eq "T"'>
-					and bo_title like '%'|| #{boTitle} ||'%'
-				</when>
-				<when test='searchType eq "W"'>
-					and bo_writer like '%'|| #{boWriter} ||'%'
-				</when>
-				<when test='searchType eq "C"'>
-					and bo_content like '%'|| #{boContent} ||'%'
-				</when>	
-				
-			</choose>
-		</if>
-		<if test='searchCategory != null && searchCategory !=" "'>
-			and bo_category = #{boCategory}
-		</if>
-
+		<include refid="whereSearchClause" />
 	</select>
 
 	<select id="getBoardList"
 		parameterType="com.study.free.vo.FreeSearchVO"
 		resultType="com.study.free.vo.FreeBoardVO">
 
+		<include refid="common.PRE_PAGEING_QRY" />
 		SELECT a.bo_num
 		,a.bo_category
 		,b.comm_nm as boCatNm
@@ -48,15 +56,18 @@
 		boRegDate
 		,to_char(a.bo_mod_date,'YYYY.MM.DD') as boModDate
 		,a.bo_hit
-		FROM free_board a left join comm_code b
+		FROM
+		free_board a left join comm_code b
 		on( a.bo_category = b.comm_cd)
-		where bo_del_yn = 'N'
-
+		where
+		bo_del_yn = 'N'
+		<include refid="whereSearchClause" />
+		order by bo_num desc
+		<include refid="common.POST_PAGEING_QRY" />
 	</select>
 
 	<select id="getBoard" parameterType="int"
 		resultType="com.study.free.vo.FreeBoardVO">
-
 		select a.bo_num
 		,a.bo_category
 		,b.comm_nm as boCatNm
@@ -78,17 +89,23 @@
 
 	<insert id="insertBoard"
 		parameterType="com.study.free.vo.FreeBoardVO">
+		<selectKey resultType="int" keyProperty="boNum" order="BEFORE">
+		select seq_free_board.nextval as boNum 
+		from dual
+		</selectKey>
+		
 		INSERT INTO free_board (
 		bo_num , bo_title , bo_category
 		, bo_writer, bo_pass, bo_content
 		, bo_ip, bo_hit, bo_reg_date
-		, bo_del_yn
+		,
+		bo_del_yn
 		) VALUES (
-		seq_free_board.nextval , #{boTitle} , #{boCategory }
+		 #{boNum} , #{boTitle} , #{boCategory}
 		, #{boWriter} , #{boPass} , #{boContent}
 		, #{boIp} , 0 , sysdate
-		, 'N' )
-
+		, 'N'
+		)
 	</insert>
 
 	<update id="updateBoard"
@@ -96,10 +113,12 @@
 
 		UPDATE free_board set
 		bo_title = #{boTitle}
-		,bo_category = #{boCategory }
+		,bo_category =
+		#{boCategory }
 		,bo_content = #{boContent}
 		,bo_mod_date = sysdate
-		where bo_num = #{boNum}
+		where
+		bo_num = #{boNum}
 		and bo_pass = #{boPass}
 
 	</update>
@@ -109,9 +128,31 @@
 		UPDATE free_board
 		set
 		bo_del_yn = 'Y'
-		where bo_num = #{boNum}
+		where bo_num =
+		#{boNum}
 		and bo_pass = #{boPass}
 	</delete>
+
+<delete id="deleteCheckBoard">
+
+	UPDATE free_board
+	set bo_del_yn = 'Y'
+	<where>
+	
+		<if test="array == null">
+			1 = 0
+		</if>
+		<if test="array != null">
+
+			<foreach collection="array" item="num" open="bo_num in("
+				close=")" separator=",">
+				#{num}
+			</foreach>
+		</if>
+	</where>
+
+
+</delete>
 
 
 </mapper>
