@@ -27,7 +27,7 @@ public class CommonCodeDaoOracle implements ICommonCodeDao {
 			sb.append("where comm_parent = ? ");
 			sb.append("order by comm_ord asc  ");
 			
-			System.out.println(sb.toString());
+			//System.out.println(sb.toString());
 			pstmt = conn.prepareStatement(sb.toString());
 			pstmt.setString(1, code);
 

@@ -18,6 +18,9 @@ public interface IFreeBoardService {
 	public void modifyBoard(FreeBoardVO board) throws BizException;
 
 	public void removeBoard(FreeBoardVO board) throws BizException;
+	
+	public void removeCheckedBoard(int[] boNums) throws BizException;
 
 	public void increaseHit(int boNum) throws BizException;
+	
 }

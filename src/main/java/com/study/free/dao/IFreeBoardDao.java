@@ -24,5 +24,8 @@ public interface IFreeBoardDao {
 	public int deleteBoard(FreeBoardVO board) throws SQLException;
 
 	public int increaseHit(int boNum) throws SQLException;
+	
+	public int deleteCheckBoard(int[] boNums) throws SQLException;
+
 
 }

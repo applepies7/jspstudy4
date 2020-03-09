@@ -51,8 +51,6 @@ public class FreeBoardController {
 		logger.debug("debug searchVO:{}",searchVO);
 		logger.trace("trace~~");
 		logger.info("info~~");
-		logger.warn("warn~~");
-		logger.error("error~~");
 
 		List<CodeVO> catList = codeDao.getCodeListByParent("BC00");
 		List<FreeBoardVO> boardList = freeBoardService.getBoardList(searchVO);
@@ -153,7 +151,8 @@ public class FreeBoardController {
 		try {
 			freeBoardService.registBoard(free);
 			session.removeAttribute("DUP_SUBMIT_PREVENT");
-			return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
+			return "redirect:/free/freeView.wow?boNum=" + free.getBoNum();
+			//return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
 		} catch (BizDuplicateException e) {
 			ResultMessageVO message = new ResultMessageVO();
 			message.setResult(false).setTitle("등록 실패").setMessage("등록 실패 했음.... 중복된 글입니다. ")
@@ -205,4 +204,12 @@ public class FreeBoardController {
 		}
 	}
 
+	@RequestMapping(value = "/removeCheckedBoard.wow")
+	public String removeCheckedBoard(int[] boNums) {
+		logger.debug("boNums = ", boNums);
+		freeBoardService.removeCheckedBoard(boNums);
+
+		return "redirect:freeList.wow";
+	}	
+	
 }

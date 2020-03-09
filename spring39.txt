@@ -28,4 +28,8 @@ spring  : mvc-servlet-context.xml 기존 servlet-context.xml
 datasource-context.xml
 aop-context.xml
 root-context.xml
+----------------------------------------------
 
+<insert>에서 <selectKey>사용.
+
+<foreach>

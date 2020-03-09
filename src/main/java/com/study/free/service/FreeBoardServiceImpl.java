@@ -44,7 +44,6 @@ public class FreeBoardServiceImpl implements IFreeBoardService {
 		} catch (SQLException e) {
 			throw new BizException(e);
 
-			
 		}
 
 	}
@@ -94,7 +93,6 @@ public class FreeBoardServiceImpl implements IFreeBoardService {
 			throw new BizException(e);
 		}
 	}
-	
 
 	@Override
 	public void increaseHit(int boNum) throws BizException {
@@ -103,6 +101,16 @@ public class FreeBoardServiceImpl implements IFreeBoardService {
 //		} catch (SQLException e) {
 //			throw new BizException(e);
 //		}
+	}
+
+	@Override
+	public void removeCheckedBoard(int[] boNums) throws BizException {
+		try {
+			freeDao.deleteCheckBoard(boNums);
+		} catch (SQLException e) {
+			throw new BizException(e);
+		}
+
 	}
 
 }

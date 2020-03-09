@@ -490,5 +490,9 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 		}
 
 	}
-
+@Override
+public int deleteCheckBoard(FreeBoardVO board) throws SQLException {
+	// TODO Auto-generated method stub
+	return 0;
+}
 }
