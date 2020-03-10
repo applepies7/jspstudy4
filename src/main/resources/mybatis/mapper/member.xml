@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- freeBoardMapper.xml -->
+<!-- 네임스페이스 = -->
+<mapper namespace="com.study.member.dao.IMemberDao">
+
+	<!-- 반복적 구문 재사용. -->
+	<sql id="whereSearchClause">
+		<if
+			test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord) 
+			and @org.apache.commons.lang3.StringUtils@isNotBlank(searchType)">
+			<choose>
+				<when test='searchType eq "ID"'>
+					and mem_id like '%'|| #{searchWord} ||'%'
+				</when>
+				<when test='searchType eq "NAME"'>
+					and mem_name like '%'|| #{searchWord} ||'%'
+				</when>
+				<when test='searchType eq "ADD"'>
+					and (mem_add1 like '%'|| #{searchWord} ||'%' or
+					mem_add2 like '%'|| #{searchWord} ||'%' )
+				</when>
+			</choose>
+		</if>
+		<if
+			test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchJob)">
+			and mem_job = #{searchJob}
+		</if>
+	</sql>
+
+
+
+
+
+	<select id="getMemberCount"
+		parameterType="com.study.member.vo.MemberSearchVO" resultType="int">
+
+		select count(*)
+		from member
+		where mem_del_yn = 'N'
+		<include refid="whereSearchClause" />
+	</select>
+
+
+
+
+	<select id="getMemberList"
+		parameterType="com.study.member.vo.MemberSearchVO"
+		resultType="com.study.member.vo.MemberVO">
+
+		<include refid="common.PRE_PAGEING_QRY" />
+		select member.mem_id
+		, member.mem_name
+		, member.mem_add1
+		,
+		member.mem_add2
+		, member.mem_job
+		, comm_code.comm_nm as mem_likenm
+		,
+		member.mem_like
+		, c.comm_nm as mem_jobnm
+		, member.mem_mileage
+		FROM
+		member, comm_code, comm_code c
+		where member.mem_like =
+		comm_code.comm_cd
+		and member.mem_job = c.comm_cd
+		and mem_del_yn = 'N'
+		<include refid="whereSearchClause" />
+		ORDER BY mem_id ASC
+		<include refid="common.POST_PAGEING_QRY" />
+	</select>
+
+	<select id="getMember" parameterType="String"
+		resultType="com.study.member.vo.MemberVO">
+		SELECT
+		mem_id, mem_pass, mem_name,
+		mem_regno1, mem_regno2,
+		to_char(mem_bir,'YYYY-MM-DD') as memBir,
+		mem_zip, mem_add1, mem_add2,
+		mem_hp, mem_mail,
+		mem_job,
+		(SELECT comm_nm FROM comm_code WHERE comm_cd
+		= mem_job) as mem_jobnm,
+		mem_like,
+		(SELECT comm_nm FROM comm_code WHERE
+		comm_cd = mem_like) as mem_likenm,
+		mem_mileage,
+		mem_del_yn
+		FROM member
+		WHERE mem_id = #{memId}
+		and mem_del_yn = 'N'
+	</select>
+
+	<insert id="insertMember"
+		parameterType="com.study.member.vo.MemberVO">
+		INSERT INTO member (
+		mem_id, mem_pass, mem_name,
+		mem_regno1, mem_regno2, mem_bir,
+		mem_zip, mem_add1, mem_add2,
+		mem_hp,
+		mem_mail, mem_job,
+		mem_like, mem_mileage, mem_del_yn
+		) VALUES (
+		#{memId}, #{memPass}, #{memName},
+		#{memRegno1}, #{memRegno2}, #{memBir},
+		#{memZip}, #{memAdd1}, #{memAdd2},
+		#{memHp}, #{memMail}, #{memJob},
+		#{memLike}, 0, 'N' )
+	</insert>
+
+	<update id="updateMember"
+		parameterType="com.study.member.vo.MemberVO">
+
+		UPDATE member
+		SET mem_pass = #{memPass}
+		,mem_name = #{memName}
+		,mem_regno1 = #{memRegno1}
+		,mem_regno2 = #{memRegno2}
+		,mem_bir = #{memBir}
+		,mem_zip = #{memZip}
+		,mem_add1 = #{memAdd1}
+		,mem_add2 = #{memAdd2}
+		,mem_hp = #{memHp}
+		,mem_mail = #{memMail}
+		,mem_job = #{memJob}
+		,mem_like = #{memLike}
+		WHERE
+		mem_id = #{memId}
+		and mem_pass = #{memPass}
+	</update>
+
+
+	<update id="deleteMember"
+		parameterType="com.study.member.vo.MemberVO">
+		UPDATE member
+		SET mem_del_yn = 'Y'
+		WHERE mem_id = #{memId}
+		and mem_pass = #{memPass}
+
+	</update>
+
+
+
+
+</mapper>

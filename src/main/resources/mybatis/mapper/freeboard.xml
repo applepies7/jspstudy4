@@ -89,20 +89,23 @@
 
 	<insert id="insertBoard"
 		parameterType="com.study.free.vo.FreeBoardVO">
-		<selectKey resultType="int" keyProperty="boNum" order="BEFORE">
-		select seq_free_board.nextval as boNum 
-		from dual
+		<selectKey resultType="int" keyProperty="boNum"
+			order="BEFORE">
+			select seq_free_board.nextval as boNum
+			from dual
 		</selectKey>
-		
+
 		INSERT INTO free_board (
 		bo_num , bo_title , bo_category
-		, bo_writer, bo_pass, bo_content
+		, bo_writer,
+		bo_pass, bo_content
 		, bo_ip, bo_hit, bo_reg_date
 		,
 		bo_del_yn
 		) VALUES (
-		 #{boNum} , #{boTitle} , #{boCategory}
-		, #{boWriter} , #{boPass} , #{boContent}
+		#{boNum} , #{boTitle} , #{boCategory}
+		, #{boWriter} , #{boPass} ,
+		#{boContent}
 		, #{boIp} , 0 , sysdate
 		, 'N'
 		)
@@ -133,26 +136,31 @@
 		and bo_pass = #{boPass}
 	</delete>
 
-<delete id="deleteCheckBoard">
+	<delete id="deleteCheckBoard">
 
-	UPDATE free_board
-	set bo_del_yn = 'Y'
-	<where>
-	
-		<if test="array == null">
-			1 = 0
-		</if>
-		<if test="array != null">
+		UPDATE free_board
+		set bo_del_yn = 'Y'
+		<where>
 
-			<foreach collection="array" item="num" open="bo_num in("
-				close=")" separator=",">
-				#{num}
-			</foreach>
-		</if>
-	</where>
+			<if test="array == null">
+				1 = 0
+			</if>
+			<if test="array != null">
 
+				<foreach collection="array" item="num" open="bo_num in("
+					close=")" separator=",">
+					#{num}
+				</foreach>
+			</if>
+		</where>
+	</delete>
 
-</delete>
+	<update id="increaseHit" parameterType="int">
+		UPDATE free_board
+		set
+		bo_hit = bo_hit + 1
+		where bo_num = #{boNum}
+	</update>
 
 
 </mapper>

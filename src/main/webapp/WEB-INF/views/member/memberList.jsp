@@ -53,7 +53,7 @@ table.grid th {
 							<select id="id_searchCategory" name="searchJob"
 								class="form-control input-sm">
 								<option value="">-- 선택 --</option>
-								<c:forEach items="${catList}" var="vo">
+								<c:forEach items="${jobs}" var="vo">
 									<option value="${vo.commCd}"
 										${vo.commCd == search.searchJob ? 'selected="selected"' : ""}>${vo.commNm}</option>
 								</c:forEach>

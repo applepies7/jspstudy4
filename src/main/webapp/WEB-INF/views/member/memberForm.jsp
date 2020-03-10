@@ -1,7 +1,3 @@
-<%@page import="com.study.common.dao.CommonCodeDaoOracle"%>
-<%@page import="com.study.common.vo.CodeVO"%>
-<%@page import="java.util.List"%>
-<%@page import="com.study.common.dao.ICommonCodeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

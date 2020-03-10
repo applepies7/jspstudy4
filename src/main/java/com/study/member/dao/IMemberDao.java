@@ -3,9 +3,12 @@ package com.study.member.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.study.member.vo.MemberSearchVO;
 import com.study.member.vo.MemberVO;
 
+@Mapper
 public interface IMemberDao {
 	/*
 	 * 회원 조회<br>

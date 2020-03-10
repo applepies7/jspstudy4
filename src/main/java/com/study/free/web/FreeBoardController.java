@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.study.common.dao.CommonCodeDaoOracle;
 import com.study.common.dao.ICommonCodeDao;
 import com.study.common.exception.BizDuplicateException;
 import com.study.common.exception.BizNotFoundException;
 import com.study.common.exception.BizRegistFailException;
+import com.study.common.service.ICommonCodeService;
 import com.study.common.vo.CodeVO;
 import com.study.common.vo.ResultMessageVO;
 import com.study.free.service.FreeBoardServiceImpl;
@@ -42,8 +42,9 @@ public class FreeBoardController {
 
 	@Autowired
 	private IFreeBoardService freeBoardService;
-	private ICommonCodeDao codeDao = new CommonCodeDaoOracle();
-
+	@Autowired
+	private ICommonCodeService codeService;
+	
 	@RequestMapping("/freeList.wow")
 	// public String freeList(httpreHttpServletRequest req, FreeSearchVO searchVO)
 	// throws Exception {
@@ -52,7 +53,7 @@ public class FreeBoardController {
 		logger.trace("trace~~");
 		logger.info("info~~");
 
-		List<CodeVO> catList = codeDao.getCodeListByParent("BC00");
+		List<CodeVO> catList = codeService.getCodeListByParent("BC00");
 		List<FreeBoardVO> boardList = freeBoardService.getBoardList(searchVO);
 		logger.info("list size = {}", boardList.size());
 
@@ -77,7 +78,7 @@ public class FreeBoardController {
 				readBoard = "";
 			String pattern = "\\b" + num + "\\b";
 			if (!Pattern.compile(pattern).matcher(readBoard).find()) {
-				freeBoardService.increaseHit(view.getBoNum());
+				freeBoardService.increaseHit(num);
 				Cookie cookie = CookieBox.createCookie("free", readBoard + num + "|");
 				resp.addCookie(cookie);
 			}
@@ -97,7 +98,7 @@ public class FreeBoardController {
 	@RequestMapping(value = "/freeEdit.wow")
 	public String freeEdit(int boNum, ModelMap model) throws Exception {
 		FreeBoardVO view = freeBoardService.getBoard(boNum);
-		List<CodeVO> a = codeDao.getCodeListByParent("BC00");
+		List<CodeVO> a = codeService.getCodeListByParent("BC00");
 		model.addAttribute("catList", a);
 		model.addAttribute("view", view);
 
@@ -128,7 +129,7 @@ public class FreeBoardController {
 	}
 
 	@RequestMapping(value = "/freeRegist.wow", method = RequestMethod.POST)
-	public String registFree(HttpServletRequest req, HttpServletResponse resp, FreeBoardVO free, HttpSession session,
+	public String FreeRegist(HttpServletRequest req, HttpServletResponse resp, FreeBoardVO free, HttpSession session,
 			ModelMap model) throws Exception {
 		// @RequestParam("dupKey") String pDupKey
 
@@ -142,7 +143,7 @@ public class FreeBoardController {
 				ResultMessageVO message = new ResultMessageVO();
 				message.setResult(false).setTitle("중복등록").setMessage("새롭게 작성해...").setUrl("/free/freeList.wow")
 						.setUrlTitle("새글 등록");
-				req.setAttribute("resultMessage", message);
+				model.addAttribute("resultMessage", message);
 				return "common/message";
 			}
 		}
@@ -170,14 +171,14 @@ public class FreeBoardController {
 	}
 
 	@RequestMapping(value = "/freeForm.wow")
-	public String freeForm(HttpServletRequest req, HttpServletResponse resp, HttpSession session, ModelMap model)
+	public String freeForm( HttpSession session, ModelMap model)
 			throws Exception {
 
 		String dupKey = UUID.randomUUID().toString();
 		session.setAttribute("DUP_SUBMIT_PREVENT", dupKey);
-		List<CodeVO> a = codeDao.getCodeListByParent("BC00");
+		List<CodeVO> a = codeService.getCodeListByParent("BC00");
 		model.addAttribute("catList", a);
-		req.setAttribute("dupKey", dupKey);
+		model.addAttribute("dupKey", dupKey);
 
 		return "free/freeForm";
 	}

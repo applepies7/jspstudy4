@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- freeBoardMapper.xml -->
+<!-- 네임스페이스 = -->
+<mapper namespace="com.study.common.dao.ICommonCodeDao">
+
+	<select id="getCodeListByParent" parameterType="String"
+		resultType="com.study.common.vo.CodeVO">
+		select comm_cd
+			  ,comm_nm
+			  ,comm_ord
+			  ,comm_parent
+		from comm_code
+		where comm_parent = #{code}
+		order by comm_ord asc
+	</select>
+
+</mapper>
