@@ -28,4 +28,5 @@ public interface IFreeBoardDao {
 	public int deleteCheckBoard(int[] boNums) throws SQLException;
 
 
+
 }

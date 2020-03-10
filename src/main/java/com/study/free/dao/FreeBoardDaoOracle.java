@@ -491,7 +491,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 
 	}
 @Override
-public int deleteCheckBoard(FreeBoardVO board) throws SQLException {
+public int deleteCheckBoard(int[] boNums) throws SQLException {
 	// TODO Auto-generated method stub
 	return 0;
 }

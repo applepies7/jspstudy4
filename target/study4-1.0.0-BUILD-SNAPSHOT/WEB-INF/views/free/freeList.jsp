@@ -50,8 +50,8 @@ function fn_recordCountPerPage_Change() {
 			<div class="panel-body">
 				<form name="frm_search" action="freeList.wow" method="get"
 					class="form-horizontal">
-					<input type="text" name="currentPageNo"
-						value="${search.currentPageNo }"> <input type="text"
+					<input type="hidden" name="currentPageNo"
+						value="${search.currentPageNo }"> <input type="hidden"
 						name="recordCountPerPage" value="${search.recordCountPerPage }">
 					<div class="form-group">
 						<label for="id_searchType" class="col-sm-2 control-label">검색</label>
@@ -107,12 +107,15 @@ function fn_recordCountPerPage_Change() {
 						${ 30 eq search.recordCountPerPage ? 'selected="selected"' : ""}>30</option>
 					<option value="50"
 						${ 50 eq search.recordCountPerPage ? 'selected="selected"' : ""}>50</option>
-
 				</select>
-
 			</div>
 
-
+			<div class="col-sm-2 col-sm-offset-7 text-left"  style="margin-bottom: 5px">
+			<button type="button" id="id_btn_chk_delete" class="btn btn-sm btn-danger">
+			<i class="fa fa-trash fa-lg" aria-hidden="true" title="선택글삭제"></i> 삭제
+			</button>
+			</div>
+			
 			<div class="col-sm-2 col-sm-offset-7 text-right"
 				style="margin-bottom: 5px">
 				<a href="freeForm.wow" class="btn btn-primary btn-default "> 글쓰기
@@ -123,9 +126,10 @@ function fn_recordCountPerPage_Change() {
 		<!--페이징 처리 검색파라미터   -->
 
 
-
+<form name="frm_free_list" action="">
 		<table class="table table-striped table-bordered table-hover">
 			<colgroup>
+				<col width="3%" />
 				<col width="5%" />
 				<col width="10%" />
 				<col />
@@ -134,6 +138,7 @@ function fn_recordCountPerPage_Change() {
 				<col width="10%" />
 			</colgroup>
 			<tr>
+				<th class="text-center"><input type="checkbox" id="id_check_all"></th>
 				<th class="text-center">글번호</th>
 				<th class="text-center">분류</th>
 				<th class="text-center">제목</th>
@@ -145,6 +150,7 @@ function fn_recordCountPerPage_Change() {
 			<c:forEach items="${boardList}" var="vo">
 				<tr class="text-center">
 
+					<td><input type="checkbox" name="boNums" value="${vo.boNum}"> </td>
 					<td>${vo.boNum}</td>
 					<td>${vo.boCatNm }</td>
 					<td class="text-left"><a
@@ -155,6 +161,7 @@ function fn_recordCountPerPage_Change() {
 				</tr>
 			</c:forEach>
 		</table>
+</form>
 
 		<nav>
 			<p>${search.currentPageNo}</p>
@@ -233,7 +240,21 @@ window.onload = function() {
 
 }
 
+$(document).ready(function(){
+	$("#id_check_all").change(function() {
+	var chk = $(this).prop("checked");
+	$("input[type='checkbox'][name='boNums']").prop("checked",chk)
+	});
+});
 
+$("#id_btn_chk_delete").click(function(e) {
+	e.preventDefault();
+	//체크된값만 조회
+	var f = document.forms.frm_free_list;
+	f.action = "removeCheckedBoard.wow";
+	f.submit();
+	
+});
 </script>
 </body>
 </html>
