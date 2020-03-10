@@ -46,11 +46,9 @@ public class DriverLoader extends HttpServlet {
 		try {
 		
 			ConnectionFactory connFactory = 
-<<<<<<< HEAD
-					 new DriverManagerConnectionFactory("jdbc:oracle:thin:@127.0.0.1:1521:xe"
-=======
+
+
 					 new DriverManagerConnectionFactory("jdbc:oracle:thin:@localhost:1521:xe"
->>>>>>> refs/remotes/origin/master
 							                            ,"java","oracle");
 			
 			PoolableConnectionFactory poolableConnFactory 
