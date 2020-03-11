@@ -7,6 +7,10 @@ import com.study.common.vo.PagingVO;
 
 public class MemberSearchVO extends PagingVO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7659839296953109932L;
 	private String searchType;
 	private String searchWord;
 	private String searchJob;

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import com.study.common.dao.CommonCodeDaoOracle;
 import com.study.common.dao.ICommonCodeDao;
 import com.study.common.vo.ResultMessageVO;
 import com.study.member.dao.IMemberDao;

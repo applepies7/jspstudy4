@@ -65,7 +65,7 @@
 		<td><input type="email" name="memMail" value="${mem.memMail}"></td>
 	</tr>	
 	<tr>
-		<th id>직업</th>
+		<th>직업</th>
 		<td>
 			<select name="memJob">
 				<option value="">직업선택</option>

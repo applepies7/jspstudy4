@@ -31,6 +31,11 @@ public class SimpleController_org extends HttpServlet {
 	// sercice = doGet doPost doPut doDelete 등으로 호출
 	// freelist.jsp 호출 하면 was는 freelist.jsp와 매핑된 서블릿을 찾아서 호출 freelist_jsp.class
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7630358049414536169L;
+
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

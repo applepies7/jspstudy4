@@ -34,7 +34,7 @@
 						<c:if test="${not empty resultMessage.url}">
 							<a href="${pageContext.request.contextPath}${resultMessage.url}"
 								class="btn btn-warning"> <span
-								class="glyphicon glyphicon-new-window aria-hidden="true"></span>
+								class="glyphicon glyphicon-new-window" aria-hidden='true'> </span>
 								&nbsp;${resultMessage.urlTitle}
 							</a>
 						</c:if>

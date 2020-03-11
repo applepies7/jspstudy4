@@ -36,7 +36,7 @@ public class PreMVCTest {
 			throw e;
 			
 		}
-		Iterator key = prop.keySet().iterator();
+		Iterator<Object> key = prop.keySet().iterator();
 		while (key.hasNext()) {
 			String a = (String) key.next();
 			String b = prop.getProperty(a);
@@ -62,7 +62,7 @@ public class PreMVCTest {
      public static Object convertMapToObject(Map<String,Object> map,Object obj){
          String key = null;
          String methodString = null;
-         Iterator itr = map.keySet().iterator();
+         Iterator<String> itr = map.keySet().iterator();
          
          while(itr.hasNext()){
              key = (String) itr.next();

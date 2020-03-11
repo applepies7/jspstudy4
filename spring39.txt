@@ -35,3 +35,11 @@ root-context.xml
 
 
 <foreach>
+
+
+-------------------------------------------------
+프리젠테이션       jsp				
+컨트롤 			controller    스프링/스트럿츠 (validation)
+퍼시스턴스			Dao           마이바티스 JPA
+비즈니스/로직		service       없음
+도메인            vo			  	

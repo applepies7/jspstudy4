@@ -1,7 +1,6 @@
 package com.study.servlet;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +54,7 @@ public class DriverLoader extends HttpServlet {
 			    = new PoolableConnectionFactory(connFactory, null);
 			poolableConnFactory.setValidationQuery("select 1 from dual");
 			//풀 설정
-			GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+			GenericObjectPoolConfig<PoolableConnection> poolConfig = new GenericObjectPoolConfig<PoolableConnection>();
 			poolConfig.setTimeBetweenEvictionRunsMillis(1000L *60L * 5L);
 			poolConfig.setTestWhileIdle(true);
 			

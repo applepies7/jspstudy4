@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.study.common.dao.CommonCodeDaoOracle;
-import com.study.common.dao.ICommonCodeDao;
 import com.study.common.vo.CodeVO;
 import com.study.servlet.IController;
 
