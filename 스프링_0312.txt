@@ -1,0 +1,106 @@
+
+@ModelAttribute 2가지 기능
+1. 커맨드객체를 자동으로 속성 저장
+2. 공통적으로 자주 속성에 저장되는 객체를 별도로 분리 
+
+---------------------------
+댓글 구현 
+- 로그인 한사람만 글 등록 (오늘은 예전 login 사용)
+- 테이블 구성  
+
+------------------------------------------------------------------------------------------------
+Spring JDBC가 해주는 작업 
+(출처 : https://smallgiant.tistory.com/13)
+
+Connection 열기와 닫기
+ - Connection과 관련된 모든 작업을 Spring JDBC가 필요한 시점에서 알아서 진행.
+   - 진행 중에 예외가 발생했을 때도 열린 모든 Connection 객체를 닫아줌.
+
+Statement 준비와 닫기
+ - SQL 정보가 담긴 Statement 또는 PreparedStatement를 생성하고 필요한 준비 작업을 해주는 것도 Spring JDBC가 한다.
+ - Statement도 Connection과 마찬가지로 사용이 끝나고 나면 Spring JDBC가 알아서 객체를 닫아줌.
+
+Statement 실행
+ - SQL이 담긴 Statement를 실행하는 것도 Spring JDBC가 해줌.
+ - Statement의 실행 결과는 다양한 형태로 가져올 수 있다.
+
+ResultSet Loop처리
+ - ResultSet에 담긴 쿼리 샐행 결과가 한 건 이상이면 ResultSet 루프를 만들어서 반복해주는 것도 Spring JDBC가 해주는 작업.
+
+Exception 처리와 반환
+ - JDBC 작업 중 발생하는 모든 예외는 Spring JDBC예외 변환기가 처리.
+ - Checked Exception인 SQLException을 Runtime Exception인 DataAccessException 타입으로 변환.
+
+Transaction 처리
+ - Spring JDBC를 사용하면 transaction과 관련된 모든 작업에 대해서는 신경 쓰지 않아도 됨.
+  * Transaction과 관련된 작업 : Commit, Rollback 등 작업의 단위
+
+
+--------------------------------------
+@MVC 어노테이션 기반 컨트롤러 
+ * @Controller
+ * @RequestMapping 
+ * @ModelAttribute 
+ * @RequestParam
+ - @SessionAttributes
+
+ - @GetMapping  = @RequestMapping(method = RequestMethod.GET)
+ - @PostMapping = @RequestMapping(method = RequestMethod.POST)
+ 
+
+ - RESTful 기반일 때 많이 사용 
+ * @RestController : REST 기반의 컨트롤러 지정 (spring 4.x)
+                    자동으로 모든 요청의 메서드는 반환은  @ResponseBody 붙은것과 동일
+                       
+ * @ResponseBody : 리턴객체를 그대로 응답의 본체로 내보내기  (spring 3.x , view가 아닌 클라이언트에 데이터 그대로 제공)
+ * @PathVariable : 요청경로의 정보를 그대로 변수에 할당
+                   @RequestMapping(value = "/board/{no}/view", "/board/{no}/edit" 
+   	               @PathVariable("no") int bo_no                    
+ - @RequestBody  : 요청정보자체를 그대로 받아들이기  
+ 
+
+@SessionAttributes 언제 사용하나요 ???
+입력하는 정보가 많아서 , 화면을 분할 
+ - step1 : 가입동의확안, 개인정보처리 동의
+ - step2 : 필수정보 입력 
+ - step3 : 필수, 선택 정보 입력 
+ - step4 : 가입처리  
+Q? 단계를 거치지않고 오면
+Q? 각 단계별로 입력한 정보의 저장은 어떻게
+    Case 1. 각 이전단계의 정보를 hidden 으로 숨겨서 마지막 단계까지 끌고 이동
+   - DB 에 임시저장소를 생성해서 각 단계별 저장을 하고
+     마지막 단계에서 취합해서 처리  
+ * 해당 객체를 사용하려고 할때 세션에 존재해야 합니다.
+ * 최종단계에서는 세션을 정리(SessionStatus.setComplete())
+
+
+-----------------------------
+Bean Validation  
+
+javax.validation.constraints. 
+
+하이버네이트에서 확장된 어노테이션 
+org.hibernate.validator.constraints.
+@URL; @Range; @CreditCardNumber; @Email; @NotBlank; @NotEmpty;
+
+
+1. Spring Validator 구현체로 검증
+  -- 등록할 때, 수정할 때 별개로 해서 구성 
+      (FreeRegistValidator , FreeModifyValidator .. )
+      
+2. @Valid 로 자동 검증 
+  -- Spring Validator 구현하지 않아도 되죠... 
+  
+  -- 등록할 때, 수정할 때 별개로 해야 하는데.... 음.. 
+  어노테이션 속성에 group 을 활용해서 구현하실수 있습니다.
+  기존 @Valid 는 아직 구현되지 않아서 
+  스프링에서 제공하는 @Validated  어노테이션을 사용해야 합니다. 
+   
+  com.study.common.valid 에 RegistType, ModifyType 인터페이스 생성(껍데기만)  
+  -- 모등 검증 어노테이션에 groups 를 기술..안하셔도 되는데...
+  -- 스프링 Default 라는것을 기술하시면 됩니다. @Validator 에.... 
+     javax.validation.groups.Default 클래스 넣어주세요
+     
+
+
+

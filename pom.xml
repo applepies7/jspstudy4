@@ -104,18 +104,21 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		
+
 		<!-- @Validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.1.2	.Final</version>
+			<version>6.1.2.Final</version>
 		</dependency>
+
 
 		<!-- Servlet -->
 		<dependency>
@@ -177,6 +180,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.9</version>
+		</dependency>
+
+		<!-- jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.3</version>
 		</dependency>
 
 		<!-- Test -->

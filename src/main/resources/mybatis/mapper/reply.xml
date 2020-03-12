@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- freeBoardMapper.xml -->
+<!-- 네임스페이스 = -->
+<mapper namespace="com.study.reply.dao.IReplyDao">
+
+	<select id="getReplyCount"
+		parameterType="com.study.reply.vo.ReplySearchVO" resultType="int">
+		<include refid="common.PRE_PAGEING_QRY"/>
+		select
+		count(*)
+		from reply
+		where re_parent_no = #{reParentNo}
+		and re_category = #{reCategory}
+		<include refid="common.POST_PAGEING_QRY"/>
+		
+	</select>
+
+	<select id="getReplyList"
+		parameterType="com.study.reply.vo.ReplySearchVO"
+		resultType="com.study.reply.vo.ReplyVO">
+		<include refid="common.PRE_PAGEING_QRY"/>
+		SELECT re_no,
+		re_category,
+		re_parent_no,
+		re_mem_id,
+		b.mem_name
+		as re_mem_name
+		re_content,
+		re_ip,
+		re_reg_date,
+		to_char(a.re_reg_date,'MM-DD HH24:MM') as re_reg_date
+		re_mod_date
+		FROM reply a, member b
+		where a.re_mam_id = b.memId
+		and re_parent_no = #{reParentNo}
+		and re_category = #{reCategory}
+		order by re_no DESC
+		<include refid="common.POST_PAGEING_QRY"/>
+		
+	</select>
+
+	<insert id="insertReply"
+		parameterType="com.study.reply.vo.ReplyVO">
+		INSERT INTO reply
+		( re_no,
+		re_category, re_parent_no,
+		re_mem_id, re_content, re_ip,
+		re_reg_date
+		)
+		VALUES
+		( seq_reply.nextval , #{reCategory}, #{reParentNo},
+		#{reMemId},
+		#{reContent}, #{reIp},
+		sysdate
+		)
+	</insert>
+<select id="getReply" parameterType="int" resultType="com.study.reply.vo.ReplyVO">
+
+</select>
+
+	<update id="updateReply"
+		parameterType="com.study.reply.vo.ReplyVO">
+		UPDATE reply
+		SET re_content = #{reContent} ,
+		re_mod_date = sysdate
+		WHERE re_no = #{reNo}
+	</update>
+	<delete id="deleteReply"
+		parameterType="com.study.reply.vo.ReplyVO">
+		DELETE FROM reply
+		WHERE re_no = #{reNo}
+	</delete>
+
+</mapper>

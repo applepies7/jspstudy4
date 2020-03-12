@@ -64,18 +64,14 @@
 						</tr>
 						<tr>
 							<th>분류</th>
-							<td><form:select path="boCategory" class="form-control" name="boCategory">
+							<td>
+							<form:select path="boCategory" class="form-control" name="boCategory">
 									<option value="">선택하세요</option>
 									<form:options items="${catList}" itemValue="commCd"
 										itemLabel="commNm" />
 								</form:select> 
 								<form:errors path="boCategory"/>
-								<%-- <select class="form-control" name="boCategory">
-								<option value="">-- 선택하세요--</option>
-								<c:forEach items="${catList}" var="vo">
-									<option value="${vo.commCd}" ${vo.commCd == free.boCategory ? 'selected="selected"' : ""}>${vo.commNm}</option>
-								</c:forEach>
-						</select> --%></td>
+								</td>
 						</tr>
 						<tr>
 							<th>IP</th>

@@ -8,33 +8,33 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class FreeBoardVO implements Serializable{
+public class FreeBoardVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private int boNum;                /* 글번호 */
+	private int boNum; /* 글번호 */
 
 	@NotBlank(message = "제목은 필수입니다.")
-	@Size(min = 3, message ="제목은 3글자 이상입니다.")
-	private String boTitle;  /* 글제목 */
-	
+	@Size(min = 3, message = "제목은 3글자 이상입니다.")
+	private String boTitle; /* 글제목 */
+
 	@NotBlank(message = "분류는 필수입니다.")
-	private String boCategory;        /* 글분류 */
-	private String boCatNm;        /* 글분류 */
-	
+	private String boCategory; /* 글분류 */
+	private String boCatNm; /* 글분류 */
+
 	@NotBlank(message = "작성자는 필수입니다.")
 	@Pattern(regexp = ".*[가-힣].*", message = "한글이 없습니다.")
-	private String boWriter;          /*  */
-	
+	private String boWriter; /*  */
+
 	@NotBlank(message = "패스워드는 필수입니다.")
 	@Size(min = 4, max = 20, message = "패스워드는 4자 이상 20자 이하입니다.")
-	private String boPass;            /*  */
+	private String boPass; /*  */
 
-	private String boContent;         /*  */
-	private String boIp;              /*  */
-	private int boHit;                /*  */
-	private String boRegDate;         /*  */
-	private String boModDate;         /*  */
-	private String boDelYn;           /*  */
+	private String boContent; /*  */
+	private String boIp; /*  */
+	private int boHit; /*  */
+	private String boRegDate; /*  */
+	private String boModDate; /*  */
+	private String boDelYn; /*  */
 
 	public FreeBoardVO() {
 		super();
@@ -157,16 +157,5 @@ public class FreeBoardVO implements Serializable{
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
-	
-	
 
-
-
-	
-
-	
-	
-	
-	
-	
 }

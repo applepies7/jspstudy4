@@ -38,23 +38,19 @@ import com.study.util.CookieBox;
 @Controller
 @RequestMapping("/free")
 public class FreeBoardController {
-	
-	
-	private final Logger logger =LoggerFactory.getLogger(getClass());
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private IFreeBoardService freeBoardService;
 	@Autowired
 	private ICommonCodeService codeService;
-	
+
 	@RequestMapping("/freeList.wow")
 	// public String freeList(httpreHttpServletRequest req, FreeSearchVO searchVO)
 	// throws Exception {
 	public void freeList(ModelMap model, FreeSearchVO searchVO) throws Exception {
-		logger.debug("debug searchVO:{}",searchVO);
-		logger.trace("trace~~");
-		logger.info("info~~");
+		logger.debug("debug searchVO:{}", searchVO);
 
 		List<CodeVO> catList = codeService.getCodeListByParent("BC00");
 		List<FreeBoardVO> boardList = freeBoardService.getBoardList(searchVO);
@@ -72,9 +68,10 @@ public class FreeBoardController {
 	public String freeView(HttpServletRequest req, HttpServletResponse resp, @RequestParam("boNum") int num)
 			throws Exception {
 
+		logger.debug("boNum = {}", num);
 		try {
-			FreeBoardVO view = freeBoardService.getBoard(num);
-			System.out.println(view);
+			FreeBoardVO free = freeBoardService.getBoard(num);
+			System.out.println(free);
 			CookieBox box = new CookieBox(req);
 			String readBoard = box.getValue("free");
 			if (readBoard == null)
@@ -85,7 +82,7 @@ public class FreeBoardController {
 				Cookie cookie = CookieBox.createCookie("free", readBoard + num + "|");
 				resp.addCookie(cookie);
 			}
-			req.setAttribute("view", view);
+			req.setAttribute("free", free);
 			return "free/freeView.jsp?bonum=" + num;
 		} catch (BizNotFoundException e) {
 			logger.error("조회 오류 boNum={}", num, e);
@@ -110,17 +107,20 @@ public class FreeBoardController {
 	}
 
 	@RequestMapping(value = "/freeModify.wow", method = RequestMethod.POST)
-	public String freeModyfy(@ModelAttribute("free") @Valid FreeBoardVO free, BindingResult errors, HttpServletRequest req, ModelMap model) throws Exception {
+	public String freeModyfy(@ModelAttribute("free") @Valid FreeBoardVO free, BindingResult errors,
+			HttpServletRequest req, ModelMap model) throws Exception {
+
+		logger.debug("free = {}", free);
 		try {
 //			//free의 값을 validation
 //			if(StringUtils.isBlank(free.getBoTitle())) {
 //				errors.rejectValue("boTitle","","제목은 왜 뺌?");
 //			}
-			
+
 			if (errors.hasErrors()) {
 				model.addAttribute("catList", codeService.getCodeListByParent("BC00"));
 				return "free/freeEdit";
-				
+
 			}
 			freeBoardService.modifyBoard(free);
 
@@ -145,7 +145,7 @@ public class FreeBoardController {
 	public String freeRegist(HttpServletRequest req, HttpServletResponse resp, FreeBoardVO free, HttpSession session,
 			ModelMap model) throws Exception {
 		// @RequestParam("dupKey") String pDupKey
-
+		logger.debug("free = {}", free);
 		String pDupKey = req.getParameter("dupKey");
 		String sDupKey = (String) session.getAttribute("DUP_SUBMIT_PREVENT");
 
@@ -165,9 +165,10 @@ public class FreeBoardController {
 		try {
 			freeBoardService.registBoard(free);
 			session.removeAttribute("DUP_SUBMIT_PREVENT");
-			
+
 			return "redirect:/free/freeView.wow?boNum=" + free.getBoNum();
-			//return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success", "utf-8");
+			// return "redirect:/free/freeList.wow?msg=" + URLDecoder.decode("success",
+			// "utf-8");
 		} catch (BizDuplicateException e) {
 			ResultMessageVO message = new ResultMessageVO();
 			message.setResult(false).setTitle("등록 실패").setMessage("등록 실패 했음.... 중복된 글입니다. ")
@@ -185,8 +186,7 @@ public class FreeBoardController {
 	}
 
 	@RequestMapping(value = "/freeForm.wow")
-	public String freeForm( HttpSession session, ModelMap model)
-			throws Exception {
+	public String freeForm(HttpSession session, ModelMap model) throws Exception {
 
 		String dupKey = UUID.randomUUID().toString();
 		session.setAttribute("DUP_SUBMIT_PREVENT", dupKey);
@@ -225,6 +225,6 @@ public class FreeBoardController {
 		freeBoardService.removeCheckedBoard(boNums);
 
 		return "redirect:freeList.wow";
-	}	
-	
+	}
+
 }

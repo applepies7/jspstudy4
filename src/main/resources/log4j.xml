@@ -19,7 +19,7 @@
 	    <!--  날짜별 로그 -->  
     <appender name="dailyout" class="org.apache.log4j.DailyRollingFileAppender">  
         <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
-        <param name="file" value="/home/pc15/log/log.log" />  
+        <param name="file" value="${user.home}/log/log.log" />  
         <param name="Append" value="true"/>  
         <!-- value의 패턴으로 기록 주기를 설정 한다. -->
         <param name="DatePattern" value="'.'yyMMdd_HHmm"/>  
@@ -35,7 +35,7 @@
     </logger> 
 
 	<!-- Application Loggers -->
-	<logger name="com.study.app">
+	<logger name="com.study">
 		<level value="debug" />
 	</logger>
 
@@ -60,7 +60,7 @@
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
-		<appender-ref ref="dailyout" />
 	</root>
+		<!-- <appender-ref ref="dailyout" /> -->
 
 </log4j:configuration>
