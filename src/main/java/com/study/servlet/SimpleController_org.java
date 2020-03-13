@@ -74,14 +74,14 @@ public class SimpleController_org extends HttpServlet {
 				int rowCount = freeDao.getBoardCount(searchVO);
 				searchVO.setTotalRecordCount(rowCount);
 				searchVO.setting();
-
-				ICommonCodeDao codeDao = new CommonCodeDaoOracle();
-				List<CodeVO> catList = codeDao.getCodeListByParent("BC00");
-				List<FreeBoardVO> boardList = freeDao.getBoardList(searchVO);
-
-				req.setAttribute("search", searchVO);
-				req.setAttribute("boardList", boardList);
-				req.setAttribute("catList", catList);
+//
+//				ICommonCodeDao codeDao //= new CommonCodeDaoOracle();
+//				List<CodeVO> catList = codeDao.getCodeListByParent("BC00");
+//				List<FreeBoardVO> boardList = freeDao.getBoardList(searchVO);
+//
+//				req.setAttribute("search", searchVO);
+//				req.setAttribute("boardList", boardList);
+//				req.setAttribute("catList", catList);
 				view = "/WEB-INF/views/free/freeList.jsp";
 
 				// dup_key

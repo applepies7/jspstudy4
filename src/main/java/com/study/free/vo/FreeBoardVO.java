@@ -2,22 +2,28 @@ package com.study.free.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.study.common.valid.ModifyValid;
+import com.study.common.valid.RegistValid;
+
 public class FreeBoardVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Min(groups = ModifyValid.class, message = "글번호가 존재 하지 않습니다.", value = 1)
 	private int boNum; /* 글번호 */
 
 	@NotBlank(message = "제목은 필수입니다.")
 	@Size(min = 3, message = "제목은 3글자 이상입니다.")
 	private String boTitle; /* 글제목 */
 
-	@NotBlank(message = "분류는 필수입니다.")
+	@NotBlank(groups = RegistValid.class, message = "분류는 필수로 선택해야 합니다.")
 	private String boCategory; /* 글분류 */
 	private String boCatNm; /* 글분류 */
 

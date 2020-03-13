@@ -43,3 +43,15 @@ root-context.xml
 퍼시스턴스			Dao           마이바티스 JPA
 비즈니스/로직		service       없음
 도메인            vo			  	
+
+
+
+
+
+
+jquery 에서
+
+each(idx, item)
+on() : click change 비교 . 상위개체에 on("click",실제 객체)동적으로 추가된 개체에 쓰임 
+find() 하위엘리먼트검색
+closest() : 상위 엘리먼트 검색

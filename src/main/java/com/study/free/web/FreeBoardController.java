@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.groups.Default;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,8 @@ import com.study.common.exception.BizDuplicateException;
 import com.study.common.exception.BizNotFoundException;
 import com.study.common.exception.BizRegistFailException;
 import com.study.common.service.ICommonCodeService;
+import com.study.common.valid.ModifyValid;
+import com.study.common.valid.RegistValid;
 import com.study.common.vo.CodeVO;
 import com.study.common.vo.ResultMessageVO;
 import com.study.free.service.IFreeBoardService;
@@ -106,9 +110,11 @@ public class FreeBoardController {
 
 	}
 
+	// @Valid 는 아직 groupd을 지원하지 않아 spring의 @validated에서 지원함. 단 소속할 그룹과
 	@RequestMapping(value = "/freeModify.wow", method = RequestMethod.POST)
-	public String freeModyfy(@ModelAttribute("free") @Valid FreeBoardVO free, BindingResult errors,
-			HttpServletRequest req, ModelMap model) throws Exception {
+	public String freeModyfy(
+			@ModelAttribute("free") @Validated(value = { ModifyValid.class, Default.class }) FreeBoardVO free,
+			BindingResult errors, HttpServletRequest req, ModelMap model) throws Exception {
 
 		logger.debug("free = {}", free);
 		try {
@@ -142,8 +148,9 @@ public class FreeBoardController {
 	}
 
 	@RequestMapping(value = "/freeRegist.wow", method = RequestMethod.POST)
-	public String freeRegist(HttpServletRequest req, HttpServletResponse resp, FreeBoardVO free, HttpSession session,
-			ModelMap model) throws Exception {
+	public String freeRegist(HttpServletRequest req, HttpServletResponse resp,
+			@ModelAttribute("free") @Validated(value = { RegistValid.class, Default.class }) FreeBoardVO free,
+			BindingResult errors, HttpSession session, ModelMap model) throws Exception {
 		// @RequestParam("dupKey") String pDupKey
 		logger.debug("free = {}", free);
 		String pDupKey = req.getParameter("dupKey");
@@ -193,6 +200,7 @@ public class FreeBoardController {
 		List<CodeVO> a = codeService.getCodeListByParent("BC00");
 		model.addAttribute("catList", a);
 		model.addAttribute("dupKey", dupKey);
+		model.addAttribute("free", new FreeBoardVO());
 
 		return "free/freeForm";
 	}

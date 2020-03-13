@@ -49,4 +49,5 @@ public interface IReplyService {
 	 */
 	public void removeReply(ReplyVO reply) throws BizException;
 	
+	public void getReply(ReplyVO reply)throws BizException;
 }

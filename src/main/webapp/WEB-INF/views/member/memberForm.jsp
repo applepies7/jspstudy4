@@ -22,61 +22,61 @@
 				</colgroup>
 				<tr>
 					<th>ID</th>
-					<td><input type="text" name="memId" value=""
+					<td><input class="form-control" type="text" name="memId" value=""
 						required="required"></td>
 					<th>회원명</th>
-					<td><input type="text" name="memName" value=""
+					<td><input class="form-control" type="text" name="memName" value=""
 						required="required"></td>
 				</tr>
 				<tr>
 					<th>패스워드</th>
-					<td colspan="3"><input type="password" name="memPass" value=""
+					<td colspan="3"><input type="password"  class="form-control" name="memPass" value=""
 						required="required"></td>
 				</tr>
 				<tr>
 					<th>주민번호</th>
-					<td colspan="3"><input type="text" name="memRegno1" value=""
-						placeholder="주민번호 앞 6자리"> - <input type="password"
+					<td colspan="3"><input class="form-control" type="text" name="memRegno1" value=""
+						placeholder="주민번호 앞 6자리"> - <input class="form-control" type="password"
 						name="memRegno2" value="" placeholder="주민번호 뒤 7자리"></td>
 				</tr>
 				<tr>
 					<th>생일</th>
-					<td colspan="3"><input type="date" name="memBir" value=""
+					<td colspan="3"><input class="form-control" type="date" name="memBir" value=""
 						placeholder="생일입력" required="required"></td>
 				</tr>
 				<tr>
 					<th>우편번호</th>
 					
 		
-					<td colspan="3"><input type="text" id="sample4_postcode" name="memZip" placeholder="우편번호"><input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></td>
-				</tr>
-				<tr>
+					<td colspan=""><input class="form-control" type="text" id="sample4_postcode" name="memZip" placeholder="우편번호"><input class="form-control" type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></td>
 					<th>주소</th>
-					<td><input type="text" id="sample4_roadAddress"  name="memAdd1" placeholder="도로명주소">
-					<input type="text" id="sample4_jibunAddress"  name="memAdd1" placeholder="지번">
+					<td><input class="form-control" type="text" id="sample4_roadAddress"  name="memAdd1" placeholder="도로명주소">
+					<input class="form-control" type="text" id="sample4_jibunAddress"  name="memAdd1" placeholder="지번">
 						<span id="guide" style="color:#999;display:none"></span></td>
 						
+				</tr>
+				<tr>
 					<th>상세주소</th>
-						<td><input type="text"
+						<td colspan="3"><input class="form-control" type="text"
 						name="memAdd2"   id="sample4_detailAddress" value="" placeholder="상세주소 입력"></td>
 				</tr>
 				<tr>
 					<th>핸드폰</th>
-					<td><input type="text" name="memHp" value=""
+					<td><input class="form-control" type="text" name="memHp" value=""
 						required="required"></td>
 					<th>메일</th>
-					<td><input type="email" name="memMail" value=""></td>
+					<td><input class="form-control" type="email" name="memMail" value=""></td>
 				</tr>
 				<tr>
 					<th>직업</th>
-					<td><select name="memJob">
+					<td><select class="form-control" name="memJob">
 							<option value="">직업을 선택하세요</option>
 							<c:forEach items="${jobs}" var="jb" varStatus="st">
 								<option value="${jb.commCd}">${jb.commNm}</option>
 							</c:forEach>
 					</select></td>
 					<th>취미</th>
-					<td><select name="memLike">
+					<td><select name="memLike" class="form-control">
 							<option value="">취미를 선택하세요</option>
 							<c:forEach items="${likes}" var="hb">
 								<option value="${hb.commCd}">${hb.commNm}</option>

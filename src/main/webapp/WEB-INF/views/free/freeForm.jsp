@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,7 +21,7 @@
 		</div>
 		<div class="row">
 			<form action="freeRegist.wow" method="post">
-			<form:form action="freeRegist.wow" commandName=""></form:form>
+				<form:form action="freeRegist.wow" commandName=""></form:form>
 				<input type="hidden" name="dupKey" value="${dupKey}">
 				<table class="table table-striped table-bordered ">
 					<colgroup>
@@ -60,8 +60,8 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><textarea id="editor" class="form-control" rows="10" cols="80" name="boContent"></textarea>
-						</td>
+						<td><textarea id="editor" class="form-control" rows="10"
+								cols="80" name="boContent"></textarea></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -78,10 +78,10 @@
 		</div>
 
 	</div>
-		<script>
-		 CKEDITOR.replace( 'editor',{
-			 
-		 } );
+	<script>
+		CKEDITOR.replace('editor', {
+
+		});
 	</script>
 </body>
 </html>

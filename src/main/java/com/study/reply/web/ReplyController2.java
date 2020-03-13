@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.study.common.exception.BizAccessFailException;
 import com.study.common.exception.BizNotFoundException;
@@ -23,8 +22,8 @@ import com.study.reply.service.IReplyService;
 import com.study.reply.vo.ReplySearchVO;
 import com.study.reply.vo.ReplyVO;
 
-@RestController
-public class ReplyController {
+//@Controller
+public class ReplyController2 {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -35,6 +34,7 @@ public class ReplyController {
 	// 또는 위 정보를 담는 vo생성
 
 	@RequestMapping(value = "/reply/replyList" ,produces = "application/json; charset=UTF-8")
+	@ResponseBody
 	public Map<String, Object> replyList(ReplySearchVO searchVO) throws Exception {
 		logger.debug("searchVO = {}", searchVO);
 
@@ -57,6 +57,7 @@ public class ReplyController {
 	}
 
 	@RequestMapping(value = "/reply/replyRegist", method = RequestMethod.POST, produces = "application/json; charset=UTF-8" )
+	@ResponseBody
 	public Map<String, Object> replyRegist(ReplyVO reply, HttpServletRequest req, HttpSession session)
 			throws Exception {
 		logger.debug("ReplyVO = {}", reply);
@@ -75,6 +76,7 @@ public class ReplyController {
 	}
 	
 	@RequestMapping(value="/reply/replyRemove")
+	@ResponseBody
 	public Map<String, Object> replyRemove(ReplyVO reply, HttpServletRequest req, HttpSession session)
 			throws Exception {
 		logger.debug("ReplyVO = {}", reply);
@@ -91,40 +93,6 @@ public class ReplyController {
 
 		try {
 			replyService.removeReply(reply);		
-			map.put("result", true);
-			map.put("msg", "정상 삭제 되었습니다.");
-			return map; 
-		} catch (BizNotFoundException e) {
-			map.put("result", false);
-			map.put("msg", "글이 존재하지 않습니다.");
-			return map; 			
-		} catch (BizAccessFailException e) {
-			map.put("result", false);
-			map.put("msg", "접근에 실패했습니다.");
-			return map; 
-		}
-		
-		
-	}
-
-	
-	@RequestMapping(value="/reply/replyModify")
-	public Map<String, Object> replyModify(ReplyVO reply, HttpServletRequest req, HttpSession session)
-			throws Exception {
-		logger.debug("ReplyVO = {}", reply);
-		
-		UserVO user = (UserVO) session.getAttribute("USER_INFO");
-		reply.setReMemId(user.getUserId());
-		Map<String, Object> map = new HashMap<String, Object>();
-//		replyService.removeReply(reply);
-////		map.put("result", true);
-//		//map.put("data", replyService.getReply(reply.getReNo()));
-//		map.put("msg", "정상 등록 되었습니다.");
-//
-//		return map;
-		
-		try {
-			replyService.modifyReply(reply);	
 			map.put("result", true);
 			map.put("msg", "정상 삭제 되었습니다.");
 			return map; 
