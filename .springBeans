@@ -8,8 +8,13 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/resources/spring/datasource-context.xml</config>
+		<config>src/main/resources/test/step1_xml.xml</config>
+		<config>src/main/resources/test/step2_anno.xml</config>
 	</configs>
 	<autoconfigs>
+		<config>src/main/resources/spring/servlet-context.xml</config>
+		<config>src/main/resources/spring/mvc-servlet.xml</config>
+		<config>src/main/resources/spring/root-context.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
