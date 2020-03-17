@@ -12,6 +12,7 @@ public class AppMainDI {
 		DIMan man = context.getBean("DIMan", DIMan.class);
 		man.info();
 		man.call();
+		
 		System.out.println("man : " + man.hashCode());
 		
 		
